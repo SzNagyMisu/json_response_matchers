@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    json_response_matchers (1.0.0)
+    json_response_matchers (1.0.1)
       activesupport
       rspec (~> 3.0)
 

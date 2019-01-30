@@ -1,13 +1,15 @@
 # JsonResponseMatchers
 
-[RSpec](https://relishapp.com/rspec) matchers for testing json responses in a [rails](https://rubyonrails.org/) application.
+[rspec](https://relishapp.com/rspec) matchers for testing json responses in a [rails](https://rubyonrails.org/) application.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'json_response_matchers', git: 'https://github.com/SzNagyMisu/json_response_matchers.git'
+group :test do
+  gem 'json_response_matchers', git: 'https://github.com/SzNagyMisu/json_response_matchers.git'
+end
 ```
 
 And then execute:
@@ -23,7 +25,12 @@ And then execute:
   require 'json_response_matchers'
 
   RSpec.configure do |config|
+    # you can include it in a general way
     config.include JsonResponseMatchers
+    # but it is recommended to include it only for the request
+    config.include JsonResponseMatchers, type: :request
+    # or the request and controller specs
+    config.include JsonResponseMatchers, type: /request|controller/
   end
   ```
 
@@ -33,20 +40,20 @@ And then execute:
   # in your request spec examples
   # instead of
   item = JSON.parse(response.body)['item']
-  expect(item.name).to eq 'item-name'
+  expect(item['name']).to eq 'item-name'
   # use the #have_json_content matcher
   expect(response).to have_json_content('item-name').at_key :item, :name
 
   # instead of
   items = JSON.parse(repsonse.body)['items']
-  expect(items.map &:id).to match_array [ 1, 2, 3, 4, 5 ]
+  expect(items.map { |item| item['id'] }).to match_array [ 1, 2, 3, 4, 5 ]
   # use the #have_json_values matcher
   expect(response).to have_json_values(1, 2, 3, 4, 5).for(:id).at_key :items
   ```
 
-### the basics
+### general rules
 
-The target of the matchers can be a json parsable string or an object with such a string at the method `#body` (like the test response in rails tests).
+The target of the matchers can be a json parsable string or an object with such a string at the method `#body` (like the test response in rails request tests).
 
 ```ruby
 expect('{"item":{"id":1,"name":"item-name"}}').to have_json_content('item-name').at_key :item, :name
@@ -58,19 +65,26 @@ The `#at_key` method is optional and can receive one or more `string`, `symbol` 
 
 ```ruby
 expect('false').to have_json_content(false)
-expect('{"items": [{"id":1,"name":"item-1"},{"id":2,"name":"item-2"}]}').to have_json_values(1, 2).for(:id).at_key 'items'
-expect('{"items": [{"id":1,"name":"item-1"},{"id":2,"name":"item-2"}]}').to have_json_values(1, 2).for(:id).at_key :items
-expect('{"items": [{"id":1,"name":"item-1"},{"id":2,"name":"item-2"}]}').to have_json_content('item-2').at_key :items, 1, 'name'
+
+json = '{"items":[{"id":1,"name":"item-1"},{"id":2,"name":"item-2"}]}'
+expect(json).to have_json_values(1, 2).for(:id).at_key 'items'
+expect(json).to have_json_values(1, 2).for(:id).at_key :items
+expect(json).to have_json_content('item-2').at_key :items, 1, 'name'
 ```
 
 Both matchers are [composable](https://relishapp.com/rspec/rspec-expectations/docs/composing-matchers).
 
 ```ruby
-expect('{"item":{"id":1}').to have_json_content(1).at_key(:item, :id).and include('"item":')
-expect('{"items":[{"id":1}]').to have_json_values(1).for(:id).at_key(:item).and include('"items":')
+expect('{"item":{"id":1},"user":{"name":"user"}}')
+  .to have_json_content(1).at_key(:item, :id)
+  .and have_json_values('user').at_key(:user, :name)
+
+expect('{"items":[{"id":1},{"id":2}],"page":1}')
+  .to have_json_values(1, 2).for(:id).at_key(:item)
+  .and have_json_content(1).at_key(:page)
 ```
 
-### have_json_content
+### #have_json_content
 
 Checks single values.
 
@@ -97,7 +111,7 @@ Checks single values.
     ```
 
 
-### have_json_values
+### #have_json_values
 
 Checks arrays. The expected values are passed as a parameter list (`*args`) to the matcher.
 
@@ -114,7 +128,7 @@ Checks arrays. The expected values are passed as a parameter list (`*args`) to t
   expect(items.to_json).to have_json_values(*items) # fails with ArgumentError
   ```
 
-* checks order only if `#in_strict_order` id specified
+* checks order only if `#in_strict_order` is specified
 
   ```ruby
   expect(items.to_json).to have_json_values(1, 3, 2).for(:id) # passes

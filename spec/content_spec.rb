@@ -94,5 +94,6 @@ RSpec.describe '#have_json_content' do
   it 'works as compound matcher.' do
     expect(json).to have_json_content(name: 'item 1', count: 2).at_key(:item).and include('"item":')
     expect(json).to have_json_content(name: 'item 2', count: 1).at_key(:item).or  include('"item":')
+    expect(response).to have_json_content(count: 2).at_key(:item).and have_json_content('item 1').at_key :item, :name
   end
 end

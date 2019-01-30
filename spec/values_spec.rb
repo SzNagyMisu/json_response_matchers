@@ -87,5 +87,8 @@ RSpec.describe '#have_json_values' do
   it 'works as compound matcher.' do
     expect(json).to have_json_values('item 1', 'item 2', 'item 3').for(:name).at_key(:items).and include('"items":')
     expect(json).to have_json_values('item 4', 'item 5', 'item 6').for(:name).at_key(:items).or  include('"items":')
+    expect('{"items":[{"id":1},{"id":2}],"page":2}')
+      .to have_json_values(1, 2).for(:id).at_key(:items)
+      .and have_json_content(2).at_key(:page)
   end
 end

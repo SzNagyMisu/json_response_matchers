@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Szijjártó Nagy Misu"]
   spec.email         = ["szijjarto-nagy.mihaly@ejogseged.hu"]
 
-  spec.summary       = 'rspec matcher to test http responses in rails with json content'
+  spec.summary       = 'rspec matchers to test http responses with json content in rails'
   spec.description   = 'Provides two matchers (#have_json_content and #have_json_values) to make testing json responses easy.'
-  # spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = 'https://github.com/SzNagyMisu/json_response_matchers'
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

@@ -2,13 +2,19 @@
 
 [rspec](https://relishapp.com/rspec) matchers for testing json responses in a [rails](https://rubyonrails.org/) application.
 
+## Dependencies
+
+* **ruby** `'>= 2.0.0'`
+* **rspec** `'>= 3.0'` <!-- see composable matchers -->
+* **activesupport** `'>= 4.0.6'` <!-- see https://github.com/rails/rails/pull/10887 -->
+
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
 group :test do
-  gem 'json_response_matchers', git: 'https://github.com/SzNagyMisu/json_response_matchers.git'
+  gem 'json_response_matchers'
 end
 ```
 
@@ -22,8 +28,6 @@ And then execute:
 
   ```ruby
   # spec/rails_helper.rb
-  require 'json_response_matchers'
-
   RSpec.configure do |config|
     # you can include it in a general way
     config.include JsonResponseMatchers

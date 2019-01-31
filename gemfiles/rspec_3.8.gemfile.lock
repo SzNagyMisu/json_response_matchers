@@ -1,5 +1,5 @@
 PATH
-  remote: .
+  remote: ..
   specs:
     json_response_matchers (1.1.0)
       activesupport (>= 4.0.6)
@@ -49,6 +49,7 @@ DEPENDENCIES
   bundler (~> 1.16)
   json_response_matchers!
   rake (~> 10.0)
+  rspec (= 3.8.0)
 
 BUNDLED WITH
    1.16.6

@@ -1,5 +1,5 @@
 PATH
-  remote: .
+  remote: ..
   specs:
     json_response_matchers (1.1.0)
       activesupport (>= 4.0.6)
@@ -23,19 +23,18 @@ GEM
       concurrent-ruby (~> 1.0)
     minitest (5.11.3)
     rake (10.5.0)
-    rspec (3.8.0)
-      rspec-core (~> 3.8.0)
-      rspec-expectations (~> 3.8.0)
-      rspec-mocks (~> 3.8.0)
-    rspec-core (3.8.0)
-      rspec-support (~> 3.8.0)
-    rspec-expectations (3.8.2)
+    rspec (3.0.0)
+      rspec-core (~> 3.0.0)
+      rspec-expectations (~> 3.0.0)
+      rspec-mocks (~> 3.0.0)
+    rspec-core (3.0.4)
+      rspec-support (~> 3.0.0)
+    rspec-expectations (3.0.4)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.8.0)
-    rspec-mocks (3.8.0)
-      diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.8.0)
-    rspec-support (3.8.0)
+      rspec-support (~> 3.0.0)
+    rspec-mocks (3.0.4)
+      rspec-support (~> 3.0.0)
+    rspec-support (3.0.4)
     thor (0.20.3)
     thread_safe (0.3.6)
     tzinfo (1.2.5)
@@ -49,6 +48,7 @@ DEPENDENCIES
   bundler (~> 1.16)
   json_response_matchers!
   rake (~> 10.0)
+  rspec (= 3.0.0)
 
 BUNDLED WITH
    1.16.6

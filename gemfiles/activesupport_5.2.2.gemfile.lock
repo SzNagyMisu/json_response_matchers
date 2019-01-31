@@ -1,5 +1,5 @@
 PATH
-  remote: .
+  remote: ..
   specs:
     json_response_matchers (1.1.0)
       activesupport (>= 4.0.6)
@@ -45,6 +45,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport (= 5.2.2)
   appraisal (~> 2.2)
   bundler (~> 1.16)
   json_response_matchers!
